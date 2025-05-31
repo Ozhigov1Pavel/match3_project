@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Игра три в ряд</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="start-screen">
+    <h2>Держим сахар под контролем!</h2>
+    <img src="assets/start-doctors.png" alt="Доктора">
+    <button id="start-button">Начать игру</button>
+</div>
+
+    <h1 id="game-title" style="display:none;">Соберите 100 🔴</h1>
+    <div id="game" style="display:none;"></div>
+    <div id="progress">Собрано: <span id="score">0</span> / 100</div>
+
+    <!-- Победное модальное окно -->
+    <div id="winModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Поздравляем! Вы достигли цели!</h2>
+            <p>А в вашей практике достигать цели по снижению уровня сахара в крови могут помочь препараты Глюкофаж, Глюкованс и Инвокана.</p>
+            <div class="drugs">
+                <img src="assets/glukofazh.png" alt="Глюкофаж">
+                <img src="assets/invokana.png" alt="Инвокана">
+                <img src="assets/glukovans.png" alt="Глюкованс">
+            </div>
+            <button onclick="location.href='info.html'">ОК</button>
+        </div>
+    </div>
+
+    <script>
+document.getElementById("start-button").addEventListener("click", () => {
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("game").style.display = "grid";
+  document.getElementById("game-title").style.display = "block";
+  document.getElementById("progress").style.display = "block";
+});
+</script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background: #bde3e0;
+    user-select: none;
+    padding-top: 40px;
+}
+#game {
+    margin: 40px auto 20px;
+    width: 366px;
+    height: 350px;
+    display: grid;
+    grid-template-columns: repeat(8, 44px);
+    grid-gap: 2px;
+    position: relative;
+    overflow: hidden;
+}
+.cell {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    position: relative;
+    user-select: none;
+}
+.cell.selected {
+    box-shadow: 0 0 10px 3px #ff4444;
+    z-index: 1;
+}
+.cell.falling {
+    animation: fall 0.5s ease;
+}
+.cell.disappear {
+    animation: disappear 0.3s ease forwards;
+}
+@keyframes fall {
+    0% {
+        transform: translateY(-60px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@keyframes disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+.hidden {
+    display: none;
+}
+.drugs img {
+    width: 100px;
+    margin: 10px;
+}
+
+.cell:active {
+    transform: scale(0.9);
+    transition: transform 0.05s ease;
+}
+
+#start-screen {
+    text-align: center;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#start-screen img {
+    max-width: 300px;
+    margin: 20px 0;
+}
+#start-button {
+    background: #002f6c;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 2px solid #e74c3c;
+    cursor: pointer;
+}
+#progress {
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+ 
+.drugs {
+    display: flex;
+   justify-content: center;
+   gap: 10px;
+}
+
+.flex_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
