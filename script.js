@@ -5,14 +5,15 @@ const goalEmoji = '🔴';
 const gridSize = 8;
 let score = 0;
 let isAnimating = false;
-
+let selectedCell = null;
+const SWIPE_THRESHOLD = 15;
 const game = document.getElementById('game');
 const scoreEl = document.getElementById('score');
 const modal = document.getElementById('winModal');
-game.addEventListener('touchmove', (e) => {
-  e.preventDefault(); // отключает скролл
-}, { passive: false });
-let cells = [];
+
+document.getElementById("game").addEventListener("touchmove", function(e) {
+    e.preventDefault();
+  }, { passive: false });
 
 function weightedRandomEmoji() {
     return Math.random() < 0.35 ? goalEmoji : emojis[Math.floor(Math.random() * (emojis.length - 1))];
@@ -173,7 +174,6 @@ function addEventListeners() {
             handleSwipe(e.clientX, e.clientY, startX, startY, startIdx);
         });
 
-        cell.addEventListener('click', () => selectCell(cell));
     });
 }
 
@@ -181,6 +181,13 @@ function handleSwipe(endX, endY, startX, startY, startIdx) {
     const dx = endX - startX;
     const dy = endY - startY;
 
+    // если свайп меньше порога — обрабатываем как выбор по нажатию
+    if (Math.abs(dx) < SWIPE_THRESHOLD && Math.abs(dy) < SWIPE_THRESHOLD) {
+        selectCell(cells[startIdx]);
+        return;
+    }
+
+    // это свайп
     let direction = null;
     if (Math.abs(dx) > Math.abs(dy)) {
         direction = dx > 0 ? 'right' : 'left';
@@ -198,7 +205,38 @@ function handleSwipe(endX, endY, startX, startY, startIdx) {
         const target = cells[targetIndex];
         const source = cells[startIdx];
         swapCells(source, target, true);
+        clearSelection();
     }
 }
+function selectCell(cell) {
+    if (selectedCell === null) {
+        selectedCell = cell;
+        cell.classList.add("selected");
+    } else if (selectedCell === cell) {
+        clearSelection(); // повторный тап снимает выделение
+    } else {
+        const idx1 = parseInt(selectedCell.dataset.index);
+        const idx2 = parseInt(cell.dataset.index);
+
+        const isAdjacent =
+            (idx1 === idx2 - 1 && idx2 % gridSize !== 0) || // справа
+            (idx1 === idx2 + 1 && idx1 % gridSize !== 0) || // слева
+            (idx1 === idx2 - gridSize) || // снизу
+            (idx1 === idx2 + gridSize);   // сверху
+
+        if (isAdjacent) {
+            swapCells(selectedCell, cell, true);
+        }
+
+        clearSelection();
+    }
+}
+
+function clearSelection() {
+    cells.forEach(c => c.classList.remove("selected"));
+    selectedCell = null;
+}
+
+
 
 createBoard();
