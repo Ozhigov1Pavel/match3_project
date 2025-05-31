@@ -9,7 +9,9 @@ let isAnimating = false;
 const game = document.getElementById('game');
 const scoreEl = document.getElementById('score');
 const modal = document.getElementById('winModal');
-
+game.addEventListener('touchmove', (e) => {
+  e.preventDefault(); // отключает скролл
+}, { passive: false });
 let cells = [];
 
 function weightedRandomEmoji() {
