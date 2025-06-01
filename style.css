@@ -174,3 +174,20 @@ body {
     justify-content: space-between;
     gap: 10px;
 }
+
+@media (width >= 1024px) {
+    #game {
+        width: 566px;
+        height: 624px;
+        grid-template-columns: repeat(8, 68px);
+        grid-template-rows: repeat(8, 71px);
+        grid-gap: 2px;
+ 
+    }
+    .cell {
+        width: 74px;
+        height: 74px;
+        font-size: 37px;
+
+    }
+}
